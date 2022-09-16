@@ -11,8 +11,10 @@ namespace TextProcess
     {
         public void Reader()
         {
-
-            new Database.Database().Create();
+            /* по хорошему, куда-то надо сохранять класс, а не вызывать его new, каждый раз
+             * но тогда, возможно, появится проблема с закрытием потока записи или чтения, хз 
+             * Connection() - точно достаточно сделать один раз */
+            new Database.Database().Connection();
             new Database.Database().Write();
 
             return;

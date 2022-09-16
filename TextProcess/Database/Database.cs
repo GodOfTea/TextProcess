@@ -11,7 +11,8 @@ namespace TextProcess.Database
 {
     public class Database
     {
-        private string _databasePath = @".\TextProcessDictionary.db";
+        /* ищи меня в папке: "\TextProcess\bin\Debug\DB" */
+        private string _databasePath = @".\DB\TextProcessDictionary.db";
 
         // string _connectionPath = "Data Source=TextProcessDictionary.db";
 
@@ -24,7 +25,7 @@ namespace TextProcess.Database
 
         public Database()
         {
-            _context = new Context(_databasePath);
+            _context = new Context();
         }
 
         public void Connection()
@@ -44,12 +45,18 @@ namespace TextProcess.Database
             dic.word = "word";
             dic.wordCount = 15;
 
+            /* все запросы на запись или чтение будут выглядеть примерно так */
             _context.dictionary.Add(dic);
             _context.SaveChanges();
         }
 
         public void Create()
         {
+            string appPathDatabase = @".\DB";
+
+            if (!Directory.Exists(appPathDatabase))
+                Directory.CreateDirectory(appPathDatabase);
+
             SQLiteConnection.CreateFile(_databasePath);
             SQLiteConnection SQLConnection = new SQLiteConnection(string.Format("Data Source={0};", _databasePath));
             
